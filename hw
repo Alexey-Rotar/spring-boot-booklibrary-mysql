@@ -1,7 +1,3 @@
-package ru.gb.springbootlesson3.hw;
-
-public class Homework {
-
   /**
    * 0. Переварить все, что было изучано.
    * 1. Доделать сервис управления книгами:
@@ -26,4 +22,3 @@ public class Homework {
    * Должно задаваться в конфигурации (параметр application.issue.max-allowed-books).
    * Если параметр не задан - то использовать значение 1.
    */
-}

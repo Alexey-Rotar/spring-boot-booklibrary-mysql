@@ -13,15 +13,15 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class MyBean {
 
-    @PostConstruct // метод сработает после создания бина
-    public void postConstruct(){
-        log.info("post construct");
-    }
+//    @PostConstruct // метод сработает после создания бина
+//    public void postConstruct(){
+//        log.info("post construct");
+//    }
 
-    @PreDestroy // перед уничтожением бина (не сработает,  если тип бина prototype)
-    public void preDestroy(){
-        log.info("pre destroy");
-    }
+//    @PreDestroy // перед уничтожением бина (не сработает,  если тип бина prototype)
+//    public void preDestroy(){
+//        log.info("pre destroy");
+//    }
 
     /*
     @EventListener(ContextRefreshedEvent.class) // слушатель события
@@ -39,8 +39,8 @@ public class MyBean {
      */
 
 
-    @EventListener() // слушатель события
-    public void myEvent(MyEvent event){
-        log.info("Поймал событие");
-    }
+//    @EventListener() // слушатель события
+//    public void myEvent(MyEvent event){
+//        log.info("Поймал событие");
+//    }
 }
