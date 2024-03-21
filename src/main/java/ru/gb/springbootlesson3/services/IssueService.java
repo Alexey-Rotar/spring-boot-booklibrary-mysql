@@ -12,6 +12,7 @@ import ru.gb.springbootlesson3.repository.ReaderRepository;
 
 import javax.naming.NoPermissionException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,8 +22,8 @@ import java.util.NoSuchElementException;
 public class IssueService {
 
     // максимальное кол-во книг для выдачи читателю - параметр из конфига
-    @Value("${application.issue.max-allowed-books}")
-    private String MAX_BOOKS_NUMBER;
+    @Value("${application.issue.max-allowed-books:1}") // дефолтное значение 1
+    private Long MAX_ALLOWED_BOOKS;
 
     private final BookRepository bookRepository;
     private final IssueRepository issueRepository;
@@ -37,7 +38,7 @@ public class IssueService {
             log.info("Не удалось найти читателя с id " + request.getReaderId());
             throw new NoSuchElementException("Не удалось найти читателя с id=" + request.getReaderId());
         }
-        if (issueRepository.bookCountByReaderId(request.getReaderId()) >= Long.parseLong(MAX_BOOKS_NUMBER)){
+        if (issueRepository.notClosedIssuesCountByReaderId(request.getReaderId()) >= MAX_ALLOWED_BOOKS){
             log.info("Читатель с id=" + request.getReaderId() + " имеет на руках максимум книг");
             throw new NoPermissionException("Нельзя выдать книги читателю с id=" + request.getReaderId());
         }
@@ -56,7 +57,7 @@ public class IssueService {
         return issue;
     }
 
-    public List<Issue> findIssuesByReaderId(long id) {
+    public List<Issue> getIssueListByReaderId(long id) {
         return issueRepository.getIssueListByReaderId(id);
     }
 
@@ -65,4 +66,23 @@ public class IssueService {
         issue.setReturned_at(LocalDateTime.now());
         return issue;
     }
+
+    public List<Issue> getIssueList(){
+        return issueRepository.getIssueList();
+    }
+
+    /**
+     * Получение списка ID невозвращенных книг по ID читателя
+     * @param id ID читателя
+     * @return список ID книг List<Long>
+     */
+    public List<Long> getNotReturnedBooksByReaderId(long id){
+        List<Issue> issueList = issueRepository.notClosedIssuesByReaderId(id);
+        List<Long> idList = new ArrayList<>();
+        for (Issue issue : issueList) {
+            idList.add(issue.getIdBook());
+        }
+        return idList;
+    }
+
 }

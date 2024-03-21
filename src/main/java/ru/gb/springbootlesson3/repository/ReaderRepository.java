@@ -41,7 +41,7 @@ public class ReaderRepository {
     }
 
     /**
-     * Удаление читателя с укащзанным id
+     * Удаление читателя с указанным id
      * @param id id читателя
      * @return удаленный читатель Reader
      */
@@ -65,6 +65,14 @@ public class ReaderRepository {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Получение всего списка читателей
+     * @return список читателей List<Reader>
+     */
+    public List<Reader> getReaderList(){
+        return List.copyOf(list);
     }
 
 }

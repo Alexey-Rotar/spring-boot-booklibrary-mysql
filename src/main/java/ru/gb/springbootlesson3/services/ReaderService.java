@@ -7,6 +7,7 @@ import ru.gb.springbootlesson3.entity.Reader;
 import ru.gb.springbootlesson3.repository.ReaderRepository;
 
 import javax.naming.NoPermissionException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -40,6 +41,10 @@ public class ReaderService {
             throw new NoPermissionException("Не удалось добавить читателя с name " + name);
         }
         return reader;
+    }
+
+    public List<Reader> getReaderList(){
+        return readerRepository.getReaderList();
     }
 
 }

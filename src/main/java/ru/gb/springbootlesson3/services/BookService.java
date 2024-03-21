@@ -7,6 +7,7 @@ import ru.gb.springbootlesson3.entity.Book;
 import ru.gb.springbootlesson3.repository.BookRepository;
 
 import javax.naming.NoPermissionException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -40,6 +41,10 @@ public class BookService {
             throw new NoPermissionException("Не удалось добавить книгу с name=" + name);
         }
         return book;
+    }
+
+    public List<Book> getBookList(){
+        return bookRepository.getBookList();
     }
 
 }

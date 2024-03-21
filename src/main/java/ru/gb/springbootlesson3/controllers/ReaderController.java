@@ -61,9 +61,10 @@ public class ReaderController {
     public ResponseEntity<List<Issue>> getAllIssues(@PathVariable long id){
         log.info("Поступил запрос на список выданных книг читателю: readerId={}", id);
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(issueService.findIssuesByReaderId(id));
+            return ResponseEntity.status(HttpStatus.OK).body(issueService.getIssueListByReaderId(id));
         } catch (NoSuchElementException e){
             return ResponseEntity.notFound().build();
         }
     }
+
 }

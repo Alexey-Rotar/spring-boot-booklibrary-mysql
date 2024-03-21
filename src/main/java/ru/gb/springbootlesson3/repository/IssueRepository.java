@@ -49,14 +49,33 @@ public class IssueRepository {
     }
 
     /**
-     * Подсчёт количества невозвращенных книг у читателя
+     * Подсчёт количества не закрытых выдачей по ID читателя
      * @param id id читателя
-     * @return количество книг
+     * @return количество выдачей
      */
-    public long bookCountByReaderId(long id) {
+    public long notClosedIssuesCountByReaderId(long id) {
         return list.stream()
                 .filter(e -> e.getIdReader() == id && e.getReturned_at() == null)
                 .count();
+    }
+
+    /**
+     * Получение списка всех выдачей
+     * @return список выдачей List<Issue>
+     */
+    public List<Issue> getIssueList(){
+        return List.copyOf(list);
+    }
+
+    /**
+     * Получение списка не закрытых выдачей по ID читателя
+     * @param id id читателя
+     * @return список выдачей
+     */
+    public List<Issue> notClosedIssuesByReaderId(long id) {
+        return list.stream()
+                .filter(e -> e.getIdReader() == id && e.getReturned_at() == null)
+                .toList();
     }
 
 }

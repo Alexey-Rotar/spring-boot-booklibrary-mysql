@@ -66,4 +66,13 @@ public class BookRepository {
             return null;
         }
     }
+
+    /**
+     * Получение всего списка книг
+     * @return список книг List<Book>
+     */
+    public List<Book> getBookList(){
+        return List.copyOf(list);
+    }
+
 }
