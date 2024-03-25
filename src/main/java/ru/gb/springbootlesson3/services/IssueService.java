@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.gb.springbootlesson3.controllers.IssueRequest;
 import ru.gb.springbootlesson3.entity.Issue;
-import ru.gb.springbootlesson3.repository.BookRepository;
-import ru.gb.springbootlesson3.repository.IssueRepository;
-import ru.gb.springbootlesson3.repository.ReaderRepository;
+import ru.gb.springbootlesson3.repository.*;
 
 import javax.naming.NoPermissionException;
 import java.time.LocalDateTime;
@@ -25,31 +23,32 @@ public class IssueService {
     @Value("${application.issue.max-allowed-books:1}") // дефолтное значение 1
     private Long MAX_ALLOWED_BOOKS;
 
-    private final BookRepository bookRepository;
-    private final IssueRepository issueRepository;
-    private final ReaderRepository readerRepository;
+    private final JpaIssueRepository jpaIssueRepository;
+    private final JpaReaderRepository jpaReaderRepository;
+    private final JpaBookRepository jpaBookRepository;
 
     public Issue createIssue(IssueRequest request) throws NoPermissionException {
-        if (bookRepository.findById(request.getBookId()) == null){
+        if (jpaBookRepository.findById(request.getBookId()).isEmpty()){
             log.info("Не удалось найти книгу с id=" + request.getBookId());
             throw new NoSuchElementException("Не удалось найти книгу с id=" + request.getBookId());
         }
-        if (readerRepository.findById(request.getReaderId()) == null){
+        if (jpaReaderRepository.findById(request.getReaderId()).isEmpty()){
             log.info("Не удалось найти читателя с id " + request.getReaderId());
             throw new NoSuchElementException("Не удалось найти читателя с id=" + request.getReaderId());
         }
-        if (issueRepository.notClosedIssuesCountByReaderId(request.getReaderId()) >= MAX_ALLOWED_BOOKS){
+        // подсчёт количества не закрытых выдачей по ID читателя
+        if (getIssueList().stream()
+                .filter(e -> e.getIdReader() == request.getReaderId() && e.getReturned_at() == null)
+                .count() >= MAX_ALLOWED_BOOKS){
             log.info("Читатель с id=" + request.getReaderId() + " имеет на руках максимум книг");
             throw new NoPermissionException("Нельзя выдать книги читателю с id=" + request.getReaderId());
         }
-
         Issue issue = new Issue(request.getReaderId(), request.getBookId());
-        issueRepository.createIssue(issue);
-        return issue;
+        return jpaIssueRepository.save(issue);
     }
 
     public Issue findIssue(long id) {
-        Issue issue = issueRepository.findById(id);
+        Issue issue = jpaIssueRepository.findById(id).orElse(null);
         if (issue == null) {
             log.info("Не удалось найти выдачу с id=" + id);
             throw new NoSuchElementException("Не удалось найти выдачу с id=" + id);
@@ -58,17 +57,20 @@ public class IssueService {
     }
 
     public List<Issue> getIssueListByReaderId(long id) {
-        return issueRepository.getIssueListByReaderId(id);
+        List<Issue> list = getIssueList();
+        return list.stream()
+                .filter(e -> e.getIdReader() == id)
+                .toList();
     }
 
     public Issue closeIssueById(long issueId) {
         Issue issue = findIssue(issueId);
         issue.setReturned_at(LocalDateTime.now());
-        return issue;
+        return jpaIssueRepository.save(issue);
     }
 
     public List<Issue> getIssueList(){
-        return issueRepository.getIssueList();
+        return jpaIssueRepository.findAll();
     }
 
     /**
@@ -77,7 +79,11 @@ public class IssueService {
      * @return список ID книг List<Long>
      */
     public List<Long> getNotReturnedBooksByReaderId(long id){
-        List<Issue> issueList = issueRepository.notClosedIssuesByReaderId(id);
+        List<Issue> list = getIssueList();
+        // получение списка (фильтр) не закрытых выдачей по ID читателя
+        List<Issue> issueList = list.stream()
+                .filter(e -> e.getIdReader() == id && e.getReturned_at() == null)
+                .toList();
         List<Long> idList = new ArrayList<>();
         for (Issue issue : issueList) {
             idList.add(issue.getIdBook());
