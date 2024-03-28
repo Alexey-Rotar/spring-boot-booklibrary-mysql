@@ -339,11 +339,11 @@
             "type": "integer",
             "format": "int64"
           },
-          "book": {
-            "$ref": "#/components/schemas/Book"
-          },
           "reader": {
             "$ref": "#/components/schemas/Reader"
+          },
+          "book": {
+            "$ref": "#/components/schemas/Book"
           },
           "issued_at": {
             "type": "string",

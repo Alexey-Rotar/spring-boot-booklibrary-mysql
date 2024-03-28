@@ -38,16 +38,13 @@ public class UIController {
     @GetMapping("issues")
     public String getAllIssues(Model model){
         model.addAttribute("issues", issueService.getIssueList());
-        model.addAttribute("readerService", readerService);
-        model.addAttribute("bookService", bookService);
         return "issues.html";
     }
 
     @GetMapping("reader/{id}")
     public String getReaderIssues(@PathVariable long id, Model model){
         model.addAttribute("reader", readerService.findReader(id));
-        model.addAttribute("booksId", issueService.getNotReturnedBooksByReaderId(id));
-        model.addAttribute("bookService", bookService);
+        model.addAttribute("issues", issueService.getIssuesByReaderIdAndNotReturnedBooks(id));
         return "reader.html";
     }
 

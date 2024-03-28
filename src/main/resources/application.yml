@@ -1,6 +1,8 @@
 spring:
   application:
-    name: spring-boot-libraryDB
+    name: spring-boot-booklibrary-mysql
+    issue:
+      max-allowed-books: 2
   datasource:
     url: jdbc:mysql://localhost:3306/libDB
     username: root
@@ -13,14 +15,3 @@ spring:
 server:
   error:
     include-message: ALWAYS
-application:
-  issue:
-    max-allowed-books: 2
-
-
-#spring.jpa.hibernate.ddl-auto=update
-#spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example
-#spring.datasource.username=springuser
-#spring.datasource.password=ThePassword
-#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-#spring.jpa.show-sql: true

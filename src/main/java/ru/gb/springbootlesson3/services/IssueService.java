@@ -10,7 +10,6 @@ import ru.gb.springbootlesson3.repository.*;
 
 import javax.naming.NoPermissionException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -20,7 +19,7 @@ import java.util.NoSuchElementException;
 public class IssueService {
 
     // максимальное кол-во книг для выдачи читателю - параметр из конфига
-    @Value("${application.issue.max-allowed-books:1}") // дефолтное значение 1
+    @Value("${spring.application.issue.max-allowed-books:1}") // дефолтное значение 1
     private Long MAX_ALLOWED_BOOKS;
 
     private final JpaIssueRepository jpaIssueRepository;
@@ -28,22 +27,22 @@ public class IssueService {
     private final JpaBookRepository jpaBookRepository;
 
     public Issue createIssue(IssueRequest request) throws NoPermissionException {
-        if (jpaBookRepository.findById(request.getBookId()).isEmpty()){
-            log.info("Не удалось найти книгу с id=" + request.getBookId());
-            throw new NoSuchElementException("Не удалось найти книгу с id=" + request.getBookId());
+        if (jpaBookRepository.findById(request.getBook().getId()).isEmpty()){
+            log.info("Не удалось найти книгу с id=" + request.getBook().getId());
+            throw new NoSuchElementException("Не удалось найти книгу с id=" + request.getBook().getId());
         }
-        if (jpaReaderRepository.findById(request.getReaderId()).isEmpty()){
-            log.info("Не удалось найти читателя с id " + request.getReaderId());
-            throw new NoSuchElementException("Не удалось найти читателя с id=" + request.getReaderId());
+        if (jpaReaderRepository.findById(request.getReader().getId()).isEmpty()){
+            log.info("Не удалось найти читателя с id " + request.getReader().getId());
+            throw new NoSuchElementException("Не удалось найти читателя с id=" + request.getReader().getId());
         }
         // подсчёт количества не закрытых выдачей по ID читателя
         if (getIssueList().stream()
-                .filter(e -> e.getIdReader() == request.getReaderId() && e.getReturned_at() == null)
+                .filter(e -> e.getReader().getId() == request.getReader().getId() && e.getReturned_at() == null)
                 .count() >= MAX_ALLOWED_BOOKS){
-            log.info("Читатель с id=" + request.getReaderId() + " имеет на руках максимум книг");
-            throw new NoPermissionException("Нельзя выдать книги читателю с id=" + request.getReaderId());
+            log.info("Читатель с id=" + request.getReader().getId() + " имеет на руках максимум книг");
+            throw new NoPermissionException("Нельзя выдать книги читателю с id=" + request.getReader().getId());
         }
-        Issue issue = new Issue(request.getReaderId(), request.getBookId());
+        Issue issue = new Issue(request.getReader(), request.getBook());
         return jpaIssueRepository.save(issue);
     }
 
@@ -59,7 +58,7 @@ public class IssueService {
     public List<Issue> getIssueListByReaderId(long id) {
         List<Issue> list = getIssueList();
         return list.stream()
-                .filter(e -> e.getIdReader() == id)
+                .filter(e -> e.getReader().getId() == id)
                 .toList();
     }
 
@@ -78,17 +77,11 @@ public class IssueService {
      * @param id ID читателя
      * @return список ID книг List<Long>
      */
-    public List<Long> getNotReturnedBooksByReaderId(long id){
+    public List<Issue> getIssuesByReaderIdAndNotReturnedBooks(long id){
         List<Issue> list = getIssueList();
-        // получение списка (фильтр) не закрытых выдачей по ID читателя
-        List<Issue> issueList = list.stream()
-                .filter(e -> e.getIdReader() == id && e.getReturned_at() == null)
+        return list.stream()
+                .filter(e -> e.getReader().getId() == id && e.getReturned_at() == null)
                 .toList();
-        List<Long> idList = new ArrayList<>();
-        for (Issue issue : issueList) {
-            idList.add(issue.getIdBook());
-        }
-        return idList;
     }
 
 }

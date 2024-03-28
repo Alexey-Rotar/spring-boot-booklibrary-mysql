@@ -11,8 +11,8 @@
   <tr>
     <td>Книги на руках у читателя:</td>
   </tr>
-  <tr th:each="id: ${booksId}">
-    <td th:text="${bookService.findBook(id).getName()}"></td>
+  <tr th:each="issue: ${issues}">
+    <td th:text="${issue.getBook().getName()}"></td>
   </tr>
 </table>
 </body>

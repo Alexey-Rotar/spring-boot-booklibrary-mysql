@@ -13,8 +13,8 @@
         <th>Время возврата</th>
     </tr>
     <tr th:each="issue: ${issues}">
-        <td th:text="${bookService.findBook(issue.getIdBook()).getName()}"></td>
-        <td th:text="${readerService.findReader(issue.getIdReader()).getName()}"></td>
+        <td th:text="${issue.getBook().getName()}"></td>
+        <td th:text="${issue.getReader().getName()}"></td>
         <td th:text="${issue.getIssued_at()}"></td>
         <td th:text="${issue.getReturned_at()}"></td>
     </tr>

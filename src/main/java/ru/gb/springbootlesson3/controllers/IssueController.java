@@ -33,7 +33,7 @@ public class IssueController {
     // ResponseEntity<Issue> описывает ответ, напр. вернёт код ошибки, если не удалось найти запрашиваемый ресурс
     public ResponseEntity<Issue> issueBook(@RequestBody IssueRequest issueRequest) {
         log.info("Поступил запрос на выдачу: readerId={}, bookId={}"
-                , issueRequest.getReaderId(), issueRequest.getBookId());
+                , issueRequest.getReader().getId(), issueRequest.getBook().getId());
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.createIssue(issueRequest)); // "Created" = код 201
         } catch (NoSuchElementException e){
@@ -46,7 +46,7 @@ public class IssueController {
     // GET /issue/{id} - получить описание факта выдачи
     @GetMapping("issue/{id}")
     public ResponseEntity<Issue> getById(@PathVariable long id){
-        log.info("Поступил запрос на выдачу: issueId={}", id);
+        log.info("Поступил запрос на информацию о выдаче: issueId={}", id);
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findIssue(id)); // "OK" = код 200
         } catch (NoSuchElementException e){

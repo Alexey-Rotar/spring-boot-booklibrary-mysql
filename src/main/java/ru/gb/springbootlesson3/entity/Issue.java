@@ -15,20 +15,22 @@ public class Issue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
-    private long idReader;
+    @ManyToOne
+    @JoinColumn(name = "id_reader", referencedColumnName = "id")
+    private Reader reader;
 
-    @Column
-    private long idBook;
+    @ManyToOne
+    @JoinColumn(name = "id_book", referencedColumnName = "id")
+    private Book book;
 
     @Column
     private LocalDateTime issued_at;
 
     @Column
     private LocalDateTime returned_at;
-    public Issue(long idReader, long idBook){
-        this.idBook = idBook;
-        this.idReader = idReader;
+    public Issue(Reader reader, Book book){
+        this.reader = reader;
+        this.book = book;
         issued_at = LocalDateTime.now();
         returned_at = null;
     }
