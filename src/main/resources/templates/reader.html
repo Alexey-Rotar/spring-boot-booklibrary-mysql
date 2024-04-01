@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Книги у читателя</title>
+    <meta charset="UTF-8">
+    <title>Книги у читателя</title>
 </head>
 <body>
-<p>ID читателя: <span th:text="${reader.getId()}"></span></p>
-<p>Имя читателя: <span th:text="${reader.getName()}"></span></p>
-<table>
-  <tr>
-    <td>Книги на руках у читателя:</td>
-  </tr>
-  <tr th:each="issue: ${issues}">
-    <td th:text="${issue.getBook().getName()}"></td>
-  </tr>
-</table>
+    <p>ID читателя: <span th:text="${reader.getId()}"></span></p>
+    <p>Имя читателя: <span th:text="${reader.getName()}"></span></p>
+    <table>
+        <tr>
+            <td>Книги на руках у читателя:</td>
+        </tr>
+        <tr th:each="issue: ${issues}">
+            <td th:text="${issue.getBook().getName()}"></td>
+        </tr>
+    </table>
 </body>
 </html>

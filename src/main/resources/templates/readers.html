@@ -5,15 +5,15 @@
     <title>Все читатели</title>
 </head>
 <body>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Имя</th>
-    </tr>
-    <tr th:each="reader: ${readers}">
-        <td th:text="${reader.getId()}"></td>
-        <td th:text="${reader.getName()}"></td>
-    </tr>
-</table>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+        </tr>
+        <tr th:each="reader: ${readers}">
+            <td th:text="${reader.getId()}"></td>
+            <td th:text="${reader.getName()}"></td>
+        </tr>
+    </table>
 </body>
 </html>

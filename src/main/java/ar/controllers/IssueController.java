@@ -1,4 +1,4 @@
-package ru.gb.springbootlesson3.controllers;
+package ar.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.gb.springbootlesson3.entity.Issue;
-import ru.gb.springbootlesson3.services.IssueService;
+import ar.entity.Issue;
+import ar.services.IssueService;
 
 import javax.naming.NoPermissionException;
 import java.util.NoSuchElementException;

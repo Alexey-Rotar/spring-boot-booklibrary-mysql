@@ -1,12 +1,12 @@
-package ru.gb.springbootlesson3.controllers;
+package ar.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.gb.springbootlesson3.entity.Book;
-import ru.gb.springbootlesson3.services.BookService;
+import ar.entity.Book;
+import ar.services.BookService;
 
 import javax.naming.NoPermissionException;
 import java.util.NoSuchElementException;

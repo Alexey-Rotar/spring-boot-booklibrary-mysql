@@ -1,12 +1,14 @@
-package ru.gb.springbootlesson3.services;
+package ar.services;
 
+import ar.controllers.IssueRequest;
+import ar.entity.Issue;
+import ar.repository.JpaBookRepository;
+import ar.repository.JpaIssueRepository;
+import ar.repository.JpaReaderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.gb.springbootlesson3.controllers.IssueRequest;
-import ru.gb.springbootlesson3.entity.Issue;
-import ru.gb.springbootlesson3.repository.*;
 
 import javax.naming.NoPermissionException;
 import java.time.LocalDateTime;
@@ -19,7 +21,7 @@ import java.util.NoSuchElementException;
 public class IssueService {
 
     // максимальное кол-во книг для выдачи читателю - параметр из конфига
-    @Value("${spring.application.issue.max-allowed-books:1}") // дефолтное значение 1
+    @Value("${application.issue.max-allowed-books:1}") // дефолтное значение 1
     private Long MAX_ALLOWED_BOOKS;
 
     private final JpaIssueRepository jpaIssueRepository;

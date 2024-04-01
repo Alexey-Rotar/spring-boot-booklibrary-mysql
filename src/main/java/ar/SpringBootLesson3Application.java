@@ -1,4 +1,4 @@
-package ru.gb.springbootlesson3;
+package ar;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package ru.gb.springbootlesson3.entity;
+package ar.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,14 +1,14 @@
-package ru.gb.springbootlesson3.controllers;
+package ar.controllers;
 
+import ar.entity.Issue;
+import ar.entity.Reader;
+import ar.services.IssueService;
+import ar.services.ReaderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.gb.springbootlesson3.entity.Issue;
-import ru.gb.springbootlesson3.entity.Reader;
-import ru.gb.springbootlesson3.services.IssueService;
-import ru.gb.springbootlesson3.services.ReaderService;
 
 import java.util.List;
 import java.util.NoSuchElementException;

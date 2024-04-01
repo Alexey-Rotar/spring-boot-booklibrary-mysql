@@ -1,7 +1,7 @@
-package ru.gb.springbootlesson3.repository;
+package ar.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.gb.springbootlesson3.entity.Issue;
+import ar.entity.Issue;
 
 import java.util.List;
 import java.util.Optional;

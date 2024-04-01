@@ -1,12 +1,12 @@
-package ru.gb.springbootlesson3.services;
+package ar.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-import ru.gb.springbootlesson3.entity.Reader;
-import ru.gb.springbootlesson3.repository.JpaReaderRepository;
+import ar.entity.Reader;
+import ar.repository.JpaReaderRepository;
 
 import javax.naming.NoPermissionException;
 import java.util.List;

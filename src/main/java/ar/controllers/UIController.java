@@ -1,14 +1,14 @@
-package ru.gb.springbootlesson3.controllers;
+package ar.controllers;
 
+import ar.services.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.gb.springbootlesson3.services.BookService;
-import ru.gb.springbootlesson3.services.IssueService;
-import ru.gb.springbootlesson3.services.ReaderService;
+import ar.services.BookService;
+import ar.services.IssueService;
 
 @Controller
 @RequestMapping("ui")
