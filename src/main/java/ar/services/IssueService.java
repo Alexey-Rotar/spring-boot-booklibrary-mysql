@@ -1,5 +1,6 @@
 package ar.services;
 
+import ar.config.ApplicationProperties;
 import ar.controllers.IssueRequest;
 import ar.entity.Issue;
 import ar.repository.JpaBookRepository;
@@ -20,13 +21,14 @@ import java.util.NoSuchElementException;
 @Service
 public class IssueService {
 
-    // максимальное кол-во книг для выдачи читателю - параметр из конфига
-    @Value("${application.issue.max-allowed-books:1}") // дефолтное значение 1
-    private Long MAX_ALLOWED_BOOKS;
+    // максимальное кол-во книг для выдачи читателю - параметр читается напрямую из конфига
+//    @Value("${application.issue.max-allowed-books:1}") // дефолтное значение 1
+//    private Long MAX_ALLOWED_BOOKS;
 
     private final JpaIssueRepository jpaIssueRepository;
     private final JpaReaderRepository jpaReaderRepository;
     private final JpaBookRepository jpaBookRepository;
+    private final ApplicationProperties applicationProperties;
 
     public Issue createIssue(IssueRequest request) throws NoPermissionException {
         if (jpaBookRepository.findById(request.getBook().getId()).isEmpty()){
@@ -40,7 +42,7 @@ public class IssueService {
         // подсчёт количества не закрытых выдачей по ID читателя
         if (getIssueList().stream()
                 .filter(e -> e.getReader().getId() == request.getReader().getId() && e.getReturned_at() == null)
-                .count() >= MAX_ALLOWED_BOOKS){
+                .count() >= applicationProperties.getMAX_ALLOWED_BOOKS()){
             log.info("Читатель с id=" + request.getReader().getId() + " имеет на руках максимум книг");
             throw new NoPermissionException("Нельзя выдать книги читателю с id=" + request.getReader().getId());
         }
