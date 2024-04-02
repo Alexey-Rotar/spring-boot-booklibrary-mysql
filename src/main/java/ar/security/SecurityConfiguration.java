@@ -32,9 +32,9 @@ public class SecurityConfiguration {
 //
 //                        // доступ ко всем остальным ресурсам запрещен
 //                        .anyRequest().denyAll()
-
-                          // доступ ко всем остальным ресурсам разрешен
-                          .anyRequest().permitAll()
+                                       
+                        // доступ ко всем остальным ресурсам разрешен
+                        .anyRequest().permitAll()
                 )
                 .formLogin(Customizer.withDefaults()) // дефолтная форма аутентификации
                 .csrf(AbstractHttpConfigurer::disable) //
