@@ -9,11 +9,14 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create-drop # validate | update | create | create-drop
 server:
   port: 8080
   error:
     include-message: ALWAYS
+logging:
+  level:
+    root: INFO # INFO | WARN | ERROR | DEBUG
 application:
   issue:
     max-allowed-books: 2
