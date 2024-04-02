@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                         .anyRequest().permitAll()
                 )
                 .formLogin(Customizer.withDefaults()) // дефолтная форма аутентификации
-                .csrf(AbstractHttpConfigurer::disable) //
+                .csrf(AbstractHttpConfigurer::disable) // отключение защиты CSRF (для работы POST, DELETE, PUT)
                 .build();
     }
 
