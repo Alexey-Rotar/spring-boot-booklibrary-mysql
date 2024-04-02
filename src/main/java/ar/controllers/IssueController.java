@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
-//@RequestMapping("issue")
+@RequestMapping("issue")
 @RequiredArgsConstructor
 public class IssueController {
 
@@ -29,7 +29,7 @@ public class IssueController {
         DELETE - запрос на удаление ресурса
      */
 
-    @PostMapping("issue")
+    @PostMapping
     // ResponseEntity<Issue> описывает ответ, напр. вернёт код ошибки, если не удалось найти запрашиваемый ресурс
     public ResponseEntity<Issue> issueBook(@RequestBody IssueRequest issueRequest) {
         log.info("Поступил запрос на выдачу: readerId={}, bookId={}"
@@ -44,7 +44,7 @@ public class IssueController {
     }
 
     // GET /issue/{id} - получить описание факта выдачи
-    @GetMapping("issue/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Issue> getById(@PathVariable long id){
         log.info("Поступил запрос на информацию о выдаче: issueId={}", id);
         try {
@@ -55,7 +55,7 @@ public class IssueController {
     }
 
     // PUT /issue/{issueId} - закрывает факт выдачи
-    @PutMapping("issue/{issueId}")
+    @PutMapping("{issueId}")
     public ResponseEntity<Issue> closeIssue(@PathVariable long issueId){
         log.info("Поступил запрос на закрытие выдачи: issueId={}", issueId);
         try {

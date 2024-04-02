@@ -16,6 +16,7 @@ import javax.naming.NoPermissionException;
 
 @Slf4j
 @RestController
+@RequestMapping("reader")
 public class ReaderController {
 
     @Autowired
@@ -24,7 +25,7 @@ public class ReaderController {
     @Autowired
     private IssueService issueService;
 
-    @GetMapping("reader/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Reader> getById(@PathVariable long id){
         log.info("Поступил запрос информации о читателе: readerId={}", id);
         try {
@@ -34,7 +35,7 @@ public class ReaderController {
         }
     }
 
-    @DeleteMapping("reader/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Reader> deleteById(@PathVariable long id){
         log.info("Поступил запрос на удаление читателя: readerId={}", id);
         try {
@@ -44,7 +45,7 @@ public class ReaderController {
         }
     }
 
-    @PostMapping("reader")
+    @PostMapping
     public ResponseEntity<Reader> addByName(@RequestParam String name){
         log.info("Поступил запрос на добавление читателя: bookName={}", name);
         try {

@@ -13,12 +13,13 @@ import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
+@RequestMapping("book")
 public class BookController {
 
     @Autowired
     private BookService service;
 
-    @GetMapping("book/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Book> getById(@PathVariable long id){
         log.info("Поступил запрос информации о книге: bookId={}", id);
         try {
@@ -28,7 +29,7 @@ public class BookController {
         }
     }
 
-    @DeleteMapping("book/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Book> deleteById(@PathVariable long id){
         log.info("Поступил запрос на удаление книги: bookId={}", id);
         try {
@@ -38,7 +39,7 @@ public class BookController {
         }
     }
 
-    @PostMapping("book")
+    @PostMapping
     public ResponseEntity<Book> addByName(@RequestParam String name){
         log.info("Поступил запрос на добавление книги: bookName={}", name);
         try {
