@@ -15,11 +15,11 @@ public class SecurityConfiguration {
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
                 .authorizeHttpRequests(registry -> registry
-                        // в методе requestMatchers указывается какие запросы как обрабатывать
-                        // описывается разграничение по правам доступа
+                                // в методе requestMatchers указывается какие запросы как обрабатывать
+                                // описывается разграничение по правам доступа
 
-                        // ресурсы "ui/**" доступны для любого, кто авторизовался из перечисленых
-                        .requestMatchers("ui/**").hasAnyAuthority("user", "admin")
+                                // ресурсы "ui/**" доступны для любого, кто авторизовался из перечисленых
+                                .requestMatchers("ui/**").hasAnyAuthority("user", "admin")
 
 //                        // доступ к ресурсам "issue/**" для того кто авторизовался как указано в скобках, т.е. admin
 //                        .requestMatchers("issue/**").hasAuthority("admin")
@@ -32,10 +32,7 @@ public class SecurityConfiguration {
 //
 //                        // доступ ко всем остальным ресурсам запрещен
 //                        .anyRequest().denyAll()
-
-                        //.dispatcherTypeMatchers(HttpMethod.POST).permitAll()    // не помогло - POST не заработал
-                        //.requestMatchers(HttpMethod.POST).permitAll()          // не помогло - POST не заработал
-
+                                       
                         // доступ ко всем остальным ресурсам разрешен
                         .anyRequest().permitAll()
                 )
