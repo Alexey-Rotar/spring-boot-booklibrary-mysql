@@ -2,16 +2,12 @@ package ar.services;
 
 import ar.config.ApplicationProperties;
 import ar.controllers.IssueRequest;
-import ar.entity.Book;
 import ar.entity.Issue;
 import ar.repository.JpaBookRepository;
 import ar.repository.JpaIssueRepository;
 import ar.repository.JpaReaderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import javax.naming.NoPermissionException;
@@ -20,8 +16,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Slf4j
-@RequiredArgsConstructor // означает, что нужно создать конструктор из всех присутствующих аргументов (из всех трех)
 @Service
+@RequiredArgsConstructor // означает, что нужно создать конструктор из всех присутствующих полей
 public class IssueService {
 
     // максимальное кол-во книг для выдачи читателю - параметр читается напрямую из конфига

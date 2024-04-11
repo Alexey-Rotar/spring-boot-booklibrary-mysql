@@ -2,8 +2,6 @@ package ar.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import ar.entity.Reader;
 import ar.repository.JpaReaderRepository;
@@ -17,14 +15,6 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class ReaderService {
     private final JpaReaderRepository jpaReaderRepository;
-
-    @EventListener(ContextRefreshedEvent.class)
-    public void createDatabase(){
-        jpaReaderRepository.save(new Reader("Алексей"));
-        jpaReaderRepository.save(new Reader("Сергей"));
-        jpaReaderRepository.save(new Reader("Татьяна"));
-        jpaReaderRepository.save(new Reader("Ирина"));
-    }
 
     public Reader findReader(long id) {
         Reader reader = jpaReaderRepository.findById(id).orElse(null);

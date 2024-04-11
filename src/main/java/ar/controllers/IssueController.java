@@ -30,7 +30,7 @@ public class IssueController {
 
     @PostMapping
     // ResponseEntity<Issue> описывает ответ, напр. вернёт код ошибки, если не удалось найти запрашиваемый ресурс
-    public ResponseEntity<Issue> issueBook(@RequestBody IssueRequest issueRequest) {
+    public ResponseEntity<Issue> createIssue(@RequestBody IssueRequest issueRequest) {
         log.info("Поступил запрос на выдачу: readerId={}, bookId={}"
                 , issueRequest.getReader().getId(), issueRequest.getBook().getId());
         try {

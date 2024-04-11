@@ -94,7 +94,7 @@ class BookControllerTest {
         Book responseBook = webTestClient.post()
                 .uri("book?name=" + testBookName)
                 .exchange()
-                .expectStatus().isOk()
+                .expectStatus().isCreated()
                 .expectBody(Book.class)
                 .returnResult()
                 .getResponseBody();

@@ -4,8 +4,6 @@ import ar.entity.Book;
 import ar.repository.JpaBookRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import javax.naming.NoPermissionException;
@@ -17,15 +15,6 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class BookService {
     private final JpaBookRepository jpaBookRepository;
-
-    @EventListener(ContextRefreshedEvent.class)
-    public void createDatabase(){
-        jpaBookRepository.save(new Book("Война и мир"));
-        jpaBookRepository.save(new Book("Мастер и Маргарита"));
-        jpaBookRepository.save(new Book("Приключения Буратино"));
-        jpaBookRepository.save(new Book("Сердце Пармы"));
-        jpaBookRepository.save(new Book("Два капитана"));
-    }
 
     public Book findBook(long id) {
         Book book = jpaBookRepository.findById(id).orElse(null);

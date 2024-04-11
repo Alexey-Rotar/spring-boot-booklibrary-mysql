@@ -43,7 +43,7 @@ public class BookController {
     public ResponseEntity<Book> addByName(@RequestParam String name){
         log.info("Поступил запрос на добавление книги: bookName={}", name);
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.addBook(name));
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.addBook(name));
         } catch (NoSuchElementException e){
             return ResponseEntity.notFound().build();
         } catch (NoPermissionException e){
