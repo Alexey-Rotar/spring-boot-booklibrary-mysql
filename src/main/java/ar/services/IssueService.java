@@ -2,6 +2,7 @@ package ar.services;
 
 import ar.config.ApplicationProperties;
 import ar.controllers.IssueRequest;
+import ar.entity.Book;
 import ar.entity.Issue;
 import ar.repository.JpaBookRepository;
 import ar.repository.JpaIssueRepository;
@@ -9,6 +10,8 @@ import ar.repository.JpaReaderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import javax.naming.NoPermissionException;

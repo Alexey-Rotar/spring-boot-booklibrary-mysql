@@ -24,6 +24,7 @@ public class BookService {
         jpaBookRepository.save(new Book("Мастер и Маргарита"));
         jpaBookRepository.save(new Book("Приключения Буратино"));
         jpaBookRepository.save(new Book("Сердце Пармы"));
+        jpaBookRepository.save(new Book("Два капитана"));
     }
 
     public Book findBook(long id) {

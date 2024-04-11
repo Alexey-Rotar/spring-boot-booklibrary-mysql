@@ -21,7 +21,6 @@ public class IssueController {
     @Autowired
     private IssueService service;
 
-
     /*
         GET - получение записей
         POST - создание записей (передаются данные о создаваемом объекте)
