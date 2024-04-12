@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.client.reactive.ClientHttpRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.BodyInserter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,19 +29,32 @@ class IssueControllerTest {
     JpaBookRepository jpaBookRepository;
 
     @Autowired
+    JpaIssueRepository jpaIssueRepository;
+
+    @Autowired
     WebTestClient webTestClient;
 
     @Test
     void testCreateIssue() {
+        // сохраняю в репозиторий читателя и книгу
         Reader testReader = jpaReaderRepository.save(new Reader("TEST-READER-1"));
         Book testBook = jpaBookRepository.save(new Book("TEST-BOOK-1"));
 
+        // создаю экземпляры читателя и книги для последующего запроса
+        Reader requestReader = new Reader();
+        Book requestBook = new Book();
+
+        // устанавливаю ID читателя и книги, имеющихся в репозитории, читателю и книги для запроса
+        requestReader.setId(testReader.getId());
+        requestBook.setId(testBook.getId());
+
+        // формирую тело запроса
         IssueRequest issueRequest = new IssueRequest();
-        issueRequest.setReader(testReader);
-        issueRequest.setBook(testBook);
+        issueRequest.setReader(requestReader);
+        issueRequest.setBook(requestBook);
 
         Issue responseIssue = webTestClient.post()
-                .uri("issue")
+                .uri("issue/")
                 .body(issueRequest, IssueRequest.class)
                 .exchange()
                 .expectStatus().isCreated()
