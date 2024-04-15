@@ -1,5 +1,6 @@
 package ar.controllers;
 
+import ar.metric.IssueMetric;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class IssueController {
     @Autowired
     private IssueService service;
 
+    @Autowired
+    private IssueMetric issueMetric;
+
     /*
         GET - получение записей
         POST - создание записей (передаются данные о создаваемом объекте)
@@ -34,10 +38,13 @@ public class IssueController {
         log.info("Поступил запрос на выдачу: readerId={}, bookId={}"
                 , issueRequest.getReader().getId(), issueRequest.getBook().getId());
         try {
+            issueMetric.numberOfIssuedBooks.increment();
             return ResponseEntity.status(HttpStatus.CREATED).body(service.createIssue(issueRequest)); // "Created" = код 201
         } catch (NoSuchElementException e){
+            issueMetric.numberOfFailures.increment();
             return ResponseEntity.notFound().build();
         } catch (NoPermissionException e){
+            issueMetric.numberOfFailures.increment();
             return ResponseEntity.status(409).build();
         }
     }

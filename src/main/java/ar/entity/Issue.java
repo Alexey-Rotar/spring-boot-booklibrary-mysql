@@ -28,6 +28,7 @@ public class Issue {
 
     @Column
     private LocalDateTime returned_at;
+
     public Issue(Reader reader, Book book){
         this.reader = reader;
         this.book = book;

@@ -6,6 +6,8 @@ import ar.entity.Reader;
 import ar.repository.JpaBookRepository;
 import ar.repository.JpaIssueRepository;
 import ar.repository.JpaReaderRepository;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,7 @@ class IssueControllerTest {
     WebTestClient webTestClient;
 
     @Test
-    void testCreateIssue() {
+    void testCreateIssue() throws JSONException {
         // сохраняю в репозиторий читателя и книгу
         Reader testReader = jpaReaderRepository.save(new Reader("TEST-READER-1"));
         Book testBook = jpaBookRepository.save(new Book("TEST-BOOK-1"));
@@ -53,14 +55,25 @@ class IssueControllerTest {
         issueRequest.setReader(requestReader);
         issueRequest.setBook(requestBook);
 
+        JSONObject jo = new JSONObject();
+        jo.put("reader", "1");
+        jo.put("book", "1");
+
         Issue responseIssue = webTestClient.post()
                 .uri("issue/")
-                .body(issueRequest, IssueRequest.class)
+                //.body(jo, JSONObject.class)
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(Issue.class)
                 .returnResult()
                 .getResponseBody();
+
+
+//        webTestClient.post().uri("/persons")
+//                .bodyValue(issueRequest)
+//                .exchange()
+//                .expectStatus().isCreated()
+//                .expectBody().isEmpty();
 
         Assertions.assertNotNull(responseIssue);
 //        Assertions.assertEquals(responseIssue.getReader().getName(), testReader.getName());
